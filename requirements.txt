@@ -1,0 +1,12 @@
+# GUI Framework
+PyQt6
+
+# System & Hardware Telemetry
+psutil
+nvidia-ml-py
+
+# Plotting & Graphing (if using PyQtGraph widgets)
+pyqtgraph
+
+# Build & Packaging
+pyinstaller
