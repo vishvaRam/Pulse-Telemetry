@@ -350,10 +350,23 @@ class SimpleSettingsDialog(QtWidgets.QDialog):
         btn_box.addWidget(btn_save)
         layout.addLayout(btn_box)
 
+        # 4. Always on Top Checkbox
+        self.chk_always_on_top = QtWidgets.QCheckBox("Keep window always on top")
+        stored_top = self.settings.value("always_on_top", "false")
+        # Handle string or bool stored in QSettings
+        is_top = (
+            stored_top is True
+            or stored_top == "true"
+            or str(stored_top).lower() == "true"
+        )
+        self.chk_always_on_top.setChecked(is_top)
+        form.addRow("Pin Window:", self.chk_always_on_top)
+
     def save_settings(self):
         self.settings.setValue("theme", self.combo_theme.currentText())
         self.settings.setValue("font_size", self.slider_font.value())
         self.settings.setValue("refresh_rate", self.combo_refresh.currentText())
+        self.settings.setValue("always_on_top", self.chk_always_on_top.isChecked())
         self.settings_changed.emit()
         self.accept()
 
@@ -497,6 +510,23 @@ class PulseMonitorApp(QtWidgets.QMainWindow):
         theme_name = self.settings.value("theme", "Dark")
         font_size = int(self.settings.value("font_size", 12))
         refresh_str = self.settings.value("refresh_rate", "1.0s (Normal)")
+
+        # Handle Always on Top flag
+        raw_top = self.settings.value("always_on_top", False)
+        always_on_top = (
+            raw_top is True or raw_top == "true" or str(raw_top).lower() == "true"
+        )
+
+        current_flags = self.windowFlags()
+        is_currently_top = bool(
+            current_flags & QtCore.Qt.WindowType.WindowStaysOnTopHint
+        )
+
+        if is_currently_top != always_on_top:
+            self.setWindowFlag(QtCore.Qt.WindowType.WindowStaysOnTopHint, always_on_top)
+            # Re-expose native window handle across X11/Wayland/DWM
+            self.show()
+
         t = THEMES[theme_name]
 
         app_font = QtGui.QFont(self.font_family, font_size)
@@ -691,6 +721,7 @@ if __name__ == "__main__":
     # 2. Fix Windows taskbar grouping
     if sys.platform.startswith("win"):
         import ctypes
+
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
             "pulse.telemetry.app.1.0"
         )
