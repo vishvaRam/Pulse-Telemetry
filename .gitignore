@@ -2,3 +2,5 @@
 .venv-ubuntu
 /build
 /dist
+releases/*.deb
+releases/*.exe
