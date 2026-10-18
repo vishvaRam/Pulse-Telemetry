@@ -2,3 +2,4 @@
 .venv-ubuntu
 /build
 /dist
+/releases
