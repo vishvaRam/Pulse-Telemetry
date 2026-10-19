@@ -1,5 +1,11 @@
 # Pulse Telemetry ⚡
 
+[![Release](https://img.shields.io/badge/Release-v1.0.0-7aa2f7?style=for-the-badge&logo=github)](https://github.com/vishvaRam/devport-inspector/releases/latest)
+[![Platform](<https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-bb9af7?style=for-the-badge&logo=linux&logoColor=white>)](https://github.com/vishvaRam/devport-inspector/releases)
+[![Python](https://img.shields.io/badge/Python-3.9%2B-7dcfff?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![GUI](https://img.shields.io/badge/UI-PyQt6-f7768e?style=for-the-badge&logo=qt&logoColor=white)](https://riverbankcomputing.com/software/pyqt/)
+[![License](https://img.shields.io/badge/License-MIT-9ece6a?style=for-the-badge)](LICENSE)
+
 A modern, high-performance desktop hardware and GPU telemetry dashboard built with **Python**, **PyQt6**, **psutil**, and **NVIDIA NVML** (`nvidia-ml-py`).
 
 Pulse Telemetry delivers real-time system monitoring with smooth, antialiased cubic-bezier wave graphs, comprehensive NVIDIA GPU telemetry, kernel concurrency statistics, and responsive dark/light/OLED themes.
